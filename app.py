@@ -1,5 +1,4 @@
 from flask import Flask, request, jsonify
-import numpy as np
 from model import load_model, preprocess_input
 
 app = Flask(__name__)

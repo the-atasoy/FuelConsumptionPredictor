@@ -1,7 +1,5 @@
 import pickle
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import Lasso
 
 # Function to load the model and scaler
 def load_model():
