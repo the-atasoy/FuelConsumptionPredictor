@@ -13,18 +13,13 @@ def load_model():
 
 # Function to preprocess the input features
 def preprocess_input(data):
-    # One-hot encoding for 'origin'
-    df_one_hot = pd.get_dummies(pd.DataFrame(data, index=[0])['origin'], prefix='', prefix_sep='')
-    df_one_hot.columns = ['origin_america', 'origin_europa', 'origin_japan']
-    data = pd.concat([pd.DataFrame(data, index=[0]).drop(columns=['origin']), df_one_hot], axis=1)
-    data[['origin_america', 'origin_europa', 'origin_japan']] = data[['origin_america', 'origin_europa', 'origin_japan']].astype(int)
+    data = pd.DataFrame(data, index=[0])
 
     # Standardize features
     feature_columns = ['cylinders', 'displacement', 'horsepower', 'weight', 'acceleration', 'model year', 'origin_america', 'origin_europa', 'origin_japan']
     data = data[feature_columns]
-    
+
     # Load the scaler and transform
     _, scaler = load_model()
-    data_scaled = scaler.transform(data)
-
+    data_scaled = pd.DataFrame(scaler.transform(data))
     return data_scaled

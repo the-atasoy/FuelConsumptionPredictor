@@ -1,3 +1,4 @@
+import pickle
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -35,18 +36,22 @@ def scale_features(test_dataset, train_dataset):
     scaler_standard = StandardScaler()
     test_dataset = scaler_standard.fit_transform(test_dataset)
     train_dataset = scaler_standard.transform(train_dataset)
+    return test_dataset, train_dataset, scaler_standard
 
 def train_model(x_train, y_train):
     lasso_model = Lasso(alpha=0.1)
-    lasso_model.fit(x_train, y_train)
-    return lasso_model.predict(x_train)
+    return lasso_model.fit(x_train, y_train)
 
 def main():
     preprocess()
     one_hot_encode()
     x_train, x_test, y_train, y_test = split_dataset()
-    scale_features(x_test, x_train)
-    return train_model(x_train, y_train)
+    _, x_train_scaled, scaler = scale_features(x_test, x_train)
+    model = train_model(x_train_scaled, y_train)
+    with open('lasso_model.pkl', 'wb') as f:
+        pickle.dump(model, f)
+    with open('scaler.pkl', 'wb') as f:
+        pickle.dump(scaler, f)
 
 if __name__ == '__main__':
     main()

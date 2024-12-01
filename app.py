@@ -4,28 +4,36 @@ from model import load_model, preprocess_input
 
 app = Flask(__name__)
 
-# Load the model
 model, scaler = load_model()
 
-# Home route
 @app.route('/')
 def index():
     return render_template('index.html')
 
-# Route for prediction
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
-        # Get input data from the form
         cylinders = int(request.form['cylinders'])
         displacement = float(request.form['displacement'])
         horsepower = float(request.form['horsepower'])
         weight = float(request.form['weight'])
         acceleration = float(request.form['acceleration'])
         model_year = int(request.form['model_year'])
-        origin = int(request.form['origin'])  # 1 for USA, 2 for Europe, 3 for Japan
+        origin = int(request.form['origin'])
 
-        # Prepare the data in the format required by the model
+        if (origin == 1):
+            origin_america = 1
+            origin_europa = 0
+            origin_japan = 0
+        elif (origin == 2):
+            origin_europa = 1
+            origin_america = 0
+            origin_japan = 0
+        else:
+            origin_japan = 1
+            origin_america = 0
+            origin_europa = 0
+
         data = {
             'cylinders': cylinders,
             'displacement': displacement,
@@ -33,12 +41,13 @@ def predict():
             'weight': weight,
             'acceleration': acceleration,
             'model year': model_year,
-            'origin': origin
+            'origin_america': origin_america,
+            'origin_europa': origin_europa,
+            'origin_japan': origin_japan
         }
         
         data_scaled = preprocess_input(data)
 
-        # Make the prediction
         prediction = model.predict(data_scaled)
         return render_template('index.html', prediction_text=f'Predicted MPG: {prediction[0]:.2f}')
 
