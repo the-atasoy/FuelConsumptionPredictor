@@ -11,9 +11,9 @@ def predict():
         data = request.get_json()
 
         cylinders = int(data['cylinders'])
-        displacement = float(data['displacement'])
+        displacement = float(data['displacement']) / 0.016387
         horsepower = float(data['horsepower'])
-        weight = float(data['weight'])
+        weight = float(data['weight']) / 0.453592
         acceleration = float(data['acceleration'])
         model_year = int(data['model_year'])
         origin = int(data['origin'])
@@ -36,12 +36,13 @@ def predict():
 
         data_scaled = preprocess_input(input_data)
 
-        prediction = model.predict(data_scaled)
+        prediction = 235.215 / model.predict(data_scaled)[0]
 
         response = {
-            'predicted_mpg': round(prediction[0], 2)
+            'message': f'Predicted fuel consumption is {round(prediction, 2)} liters per 100km'
         }
         return jsonify(response)
+
 
     except Exception as e:
         return jsonify({'error': str(e)}), 400

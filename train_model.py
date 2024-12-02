@@ -34,12 +34,12 @@ def split_dataset():
 
 def scale_features(test_dataset, train_dataset):
     scaler_standard = StandardScaler()
-    test_dataset = scaler_standard.fit_transform(test_dataset)
-    train_dataset = scaler_standard.transform(train_dataset)
+    train_dataset = scaler_standard.fit_transform(train_dataset)
+    test_dataset = scaler_standard.transform(test_dataset)
     return test_dataset, train_dataset, scaler_standard
 
 def train_model(x_train, y_train):
-    lasso_model = Lasso(alpha=0.1)
+    lasso_model = Lasso(alpha=0.01)
     return lasso_model.fit(x_train, y_train)
 
 def main():
