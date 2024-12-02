@@ -66,7 +66,7 @@ This project predicts fuel consumption (in liters per 100km) based on various ca
 2. Response:
     ```json
     {
-        "prediction": 7.69    // Predicted fuel consumption in liters per 100km
+        "prediction": 7.69      // Predicted fuel consumption in liters per 100km
     }
     ```
 
