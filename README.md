@@ -35,6 +35,7 @@ This project predicts fuel consumption (in liters per 100km) based on various ca
 ### Training the Model
 
 1. Run the `train_model.py` script to preprocess the data, train the model, and save the model and scaler:
+   
     ```sh
     python train_model.py
     ```
