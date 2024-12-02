@@ -20,3 +20,7 @@ Thumbs.db
 
 # Ignore AI models
 *.pkl
+
+# IDE specific files
+.idea/
+.vscode/

@@ -39,7 +39,7 @@ def predict():
         prediction = 235.215 / model.predict(data_scaled)[0] # convert mpg to liters per 100km
 
         response = {
-            'message': f'Predicted fuel consumption is {round(prediction, 2)} liters per 100km'
+            'prediction': round(prediction, 2)
         }
         return jsonify(response)
 
