@@ -11,9 +11,9 @@ def predict():
         data = request.get_json()
 
         cylinders = int(data['cylinders'])
-        displacement = float(data['displacement']) / 0.016387
+        displacement = float(data['displacement']) / 0.016387 # convert liters to cubic inches
         horsepower = float(data['horsepower'])
-        weight = float(data['weight']) / 0.453592
+        weight = float(data['weight']) / 0.453592 # convert kg to lbs
         acceleration = float(data['acceleration'])
         model_year = int(data['model_year'])
         origin = int(data['origin'])
@@ -36,7 +36,7 @@ def predict():
 
         data_scaled = preprocess_input(input_data)
 
-        prediction = 235.215 / model.predict(data_scaled)[0]
+        prediction = 235.215 / model.predict(data_scaled)[0] # convert mpg to liters per 100km
 
         response = {
             'message': f'Predicted fuel consumption is {round(prediction, 2)} liters per 100km'

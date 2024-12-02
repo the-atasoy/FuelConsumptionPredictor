@@ -10,6 +10,8 @@ def preprocess():
     df.drop(['car name'], axis=1, inplace=True)
     df["horsepower"] = pd.to_numeric(df["horsepower"], errors='coerce')
     df.fillna({'horsepower': df['horsepower'].median()}, inplace=True)
+    df['model year'] = df['model year'].apply(lambda x: 1900 + x)
+
 
 def one_hot_encode():
     global df
